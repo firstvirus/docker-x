@@ -4,12 +4,14 @@ using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
+using DockerX.Application.Extensions;
 using DockerX.UI.Views;
 using DockerX.UI.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DockerX.UI;
 
-public partial class App : Application
+public partial class App : Avalonia.Application
 {
     public override void Initialize()
     {
@@ -18,6 +20,14 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        var services = new ServiceCollection();
+        services.AddInfrastructure();
+        
+        /*
+         *         var provider = services.BuildServiceProvider();
+           var vm = provider.GetRequiredService<ContainersViewModel>();
+         */
+        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
